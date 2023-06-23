@@ -26,6 +26,7 @@ def randomData():
     random_rt = [list_rt[random.randint(0, len(list_rt)-1)] for _ in range(10)]
     alamatFake = random_alamat['alamat']
     print(alamatFake)
+    print(random_alamat)
     try:
         assert re.search(r'(rt.|RT.|Rt.)', alamatFake) == True
         jsonAlmat = random_alamat
@@ -35,15 +36,19 @@ def randomData():
         data_alamat = ','.join(a1) + f",{random.choice(random_rt)}"
         data = data_alamat.split(",")
         random.shuffle(data)
-        jsonAlmat = ",".join([
+        alamata = ",".join([
             ", ".join(
                 data
             ),a2
         ])
+        jsonAlmat = omit(random_alamat, "alamat")
+        jsonAlmat.update({
+            "alamat": alamata.strip()
+        })
     
     return {
         "nama": random_nama,
-        "alamat": jsonAlmat.strip(),
+        "alamat": jsonAlmat,
         "devices": random_devices
     }
 
